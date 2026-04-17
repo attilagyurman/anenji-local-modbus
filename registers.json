@@ -1,0 +1,68 @@
+[
+	{
+		"register": 203,
+		"name": "grid_freq",
+		"division": 100
+	},
+	{
+		"register": 252,
+		"name": "total_ouput_current",
+		"division": 10		
+	},
+	{
+		"register": 254,
+		"name": "total_ouput_active_power",
+		"division": 1
+	},
+	{
+		"register": 254,
+		"name": "total_ouput_aparent_power",
+		"division": 1
+	},
+	{
+		"register": 277,
+		"name": "battery_voltage",
+		"division": 10
+	},
+	{
+		"register": 278,
+		"name": "battery_current",
+		"division": 10
+	},
+	{
+		"register": 279,
+		"name": "battery_power",
+		"division": 1
+	},
+	{
+		"register": 280,
+		"name": "battery_soc",
+		"division": 1
+	},
+	{
+		"register": 281,
+		"name": "temp_dc_modul",
+		"division": 1
+	},
+	{
+		"register": 305,
+		"name": "temp_pv_modul",
+		"division": 1
+	},
+	{
+		"register": 351,
+		"name": "pv1_voltage",
+		"division": 10
+	},
+	{
+		"register": 338,
+		"name": "voltage_unknown_1",
+		"division": 10
+	},
+	{
+		"register": 342,
+		"name": "voltage_unknown_2",
+		"division": 10
+	}
+
+]

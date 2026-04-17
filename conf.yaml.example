@@ -1,0 +1,12 @@
+debug: false  # true = print register values to console
+
+mqtt:
+  host: <mqtt_broker_ip>
+  port: 1883
+  topic: power/anenji
+inverter:
+  ip: <inverter_ip>
+  max_gap: 20    # Max. gap between two consecutive register addresses to include them in the same batch. 0 = query each register individually (original behaviour)
+  max_batch: 50  # Max. number of registers per single Modbus request
+  reconnect_delay: 10  # Seconds to wait before attempting reconnection after a connection loss
+

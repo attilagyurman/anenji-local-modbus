@@ -149,7 +149,7 @@ def start_tcp_server(pkt_to_send, expect_bytes=1024, start_register=0):
 def main():
     args = sys.argv
     if len(args) < 2:
-        print("Isahe: python anenji_modbus_scan.py <datalogger_ip> <register_number> <register_count> [localip=...]")
+        print("Usage: python anenji_modbus_scan.py <datalogger_ip> <register_number> <register_count> [localip=...]")
         sys.exit(1)
 
     # Parse localip argument
