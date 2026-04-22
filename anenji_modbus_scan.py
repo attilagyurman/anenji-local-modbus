@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """ Anenji inverter modbus scanner """
 
 import json

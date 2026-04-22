@@ -5,18 +5,23 @@
 		"division": 100
 	},
 	{
+		"register": 253,
+		"name": "output_freq",
+		"division": 100
+	},
+	{
 		"register": 252,
 		"name": "total_ouput_current",
-		"division": 10		
+		"division": 10
 	},
 	{
 		"register": 254,
-		"name": "total_ouput_active_power",
+		"name": "total_output_active_power",
 		"division": 1
 	},
 	{
-		"register": 254,
-		"name": "total_ouput_aparent_power",
+		"register": 255,
+		"name": "total_output_aparent_power",
 		"division": 1
 	},
 	{
@@ -55,6 +60,11 @@
 		"division": 10
 	},
 	{
+		"register": 389,
+		"name": "pv2_voltage",
+		"division": 10
+	},
+	{
 		"register": 338,
 		"name": "voltage_unknown_1",
 		"division": 10
@@ -64,5 +74,4 @@
 		"name": "voltage_unknown_2",
 		"division": 10
 	}
-
 ]

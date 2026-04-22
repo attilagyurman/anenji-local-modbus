@@ -1,9 +1,11 @@
-# pip install pyyaml
-# pip install paho-mqtt
+#!/usr/bin/env python3
+
+__author__ = "Attila Gyurman"
+__licence__ = "MIT"
+__maintainer = "Attila Gyurman"
+__email__ = "attila.gyurman@gmail.com"
+
 import json
-import socket
-import struct
-import sys
 import time
 from pathlib import Path
 import yaml
@@ -11,10 +13,6 @@ import paho.mqtt.client as mqtt
 import datetime
 from anenji_modbus import AnenjiModbus
 
-__author__ = "Attila Gyurman"
-__licence__ = "MIT"
-__maintainer = "Attila Gyurman"
-__email__ = "attila.gyurman@gmail.com"
 
 
 # Loading Config
@@ -22,15 +20,15 @@ def load_config(config_path='config.yaml'):
 	try:
 		with open(config_path, 'r') as config_file:
 			config = yaml.safe_load(config_file)
-		print(f"{datetime.datetime.now()}\tconfig.yaml loaded successfully.")
+		print(f"config.yaml loaded successfully.")
 		return config
 	except Exception as e:
-		print(f"{datetime.datetime.now()}\tError occured loading config.yaml: {e}")
+		print(f"Error occured loading config.yaml: {e}")
 		exit()
 
 
 def on_mqtt_connect(client, userdata, flags, rc, properties=None):
-	print(f"{datetime.datetime.now()}\tMQTT Connected with result code {rc}")
+	print(f"MQTT Connected with result code {rc}")
 	# Subscribing in on_connect() means that if we lose the connection and
 	# reconnect then subscriptions will be renewed.
 	# client.subscribe("$SYS/#")
@@ -85,9 +83,9 @@ if __name__ == "__main__":
 		try:
 			with open('registers.json', 'r', encoding='utf-8') as f:
 				registers = json.load(f)
-			print(f"{datetime.datetime.now()}\tregisters.json loaded successfully.")
+			print(f"registers.json loaded successfully.")
 		except Exception as e:
-			print(f"{datetime.datetime.now()}\tError occured loading registers.json: {e}")
+			print(f"Error occured loading registers.json: {e}")
 			exit()
 
 		mqttc.loop_start()
@@ -100,7 +98,7 @@ if __name__ == "__main__":
 			debug = config.get('debug', False)
 			groups = group_registers(registers, max_gap=max_gap, max_batch=max_batch)
 			if debug:
-				print(f"{datetime.datetime.now()}\tRegiszter csoportok (max_gap={max_gap}, max_batch={max_batch}):")
+				print(f"Register groups (max_gap={max_gap}, max_batch={max_batch}):")
 				for g in groups:
 					start = g[0]['register']
 					end = g[-1]['register']
@@ -121,8 +119,8 @@ if __name__ == "__main__":
 						batch = anenji.read_registers_batch(start_addr, count)
 						all_values.update(batch)
 					except ConnectionError as e:
-						print(f"{datetime.datetime.now()}\tKapcsolat megszakadt: {e}")
-						print(f"{datetime.datetime.now()}\tÚjracsatlakozás {reconnect_delay}s múlva...")
+						print(f"Network connection disconnected: {e}")
+						print(f"Reconnecting in {reconnect_delay}s...")
 						time.sleep(reconnect_delay)
 						anenji.force_reconnect()
 						connection_ok = False
@@ -136,17 +134,17 @@ if __name__ == "__main__":
 					if isinstance(regValue, (int, float)):
 						regValue = regValue / reg['division']
 						if debug:
-							print(f"{datetime.datetime.now()}\t{reg['name']} = {regValue}")
+							print(f"{reg['name']} = {regValue}")
 						msg = mqttc.publish(mqttTopic + "/" + reg['name'], regValue, qos=1)
 						msg.wait_for_publish()
 
 				if debug:
 					cycle_ms = (time.time() - cycle_start) * 1000
-					print(f"{datetime.datetime.now()}\tCiklus idő: {cycle_ms:.0f} ms ({len(groups)} Modbus kérés, {len(registers)} regiszter)")
+					print(f"Cycle time: {cycle_ms:.0f} ms ({len(groups)} Modbus requests, {len(registers)} registers)")
 				time.sleep(30)
 		except KeyboardInterrupt:
 			anenji.close();
-			print("Kilépés...")		
+			print("Exiting...")		
 
 		mqttc.disconnect()
 		mqttc.loop_stop()

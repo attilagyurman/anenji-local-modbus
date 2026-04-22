@@ -72,7 +72,7 @@ class AnenjiModbus:
 		sock.settimeout(2)
 		try:
 			data, addr = sock.recvfrom(1024)
-			print(f"{datetime.datetime.now()}\tUDP response from {addr}: {data}")
+			print(f"UDP response from {addr}: {data}")
 		except socket.timeout:
 			print("No UDP reply (this is normal if the device does not answer).")
 		sock.close()
@@ -112,13 +112,13 @@ class AnenjiModbus:
 		# Typical response: [unit_id][func][byte_count][data...][CRC]
 		if len(data) < 5:
 			self.force_reconnect()
-			print(f"{datetime.datetime.now()}\tResponse is too short!")
+			print(f"Response is too short!")
 			return
 		unit_id = data[0]
 		function = data[1]
 		byte_count = data[2]
 		if len(data) < 3 + byte_count + 2:
-			print(f"{datetime.datetime.now()}\tInvalid response length!")
+			print(f"Invalid response length!")
 			return
 		regdata = data[3:3+byte_count]
 		for i in range(0, len(regdata), 2):
@@ -137,11 +137,11 @@ class AnenjiModbus:
 		result = {}
 		if len(data) < 5:
 			self.force_reconnect()
-			print(f"{datetime.datetime.now()}\tResponse is too short!")
+			print(f"Response is too short!")
 			return result
 		byte_count = data[2]
 		if len(data) < 3 + byte_count + 2:
-			print(f"{datetime.datetime.now()}\tInvalid response length!")
+			print(f"Invalid response length!")
 			return result
 		regdata = data[3:3+byte_count]
 		for i in range(0, len(regdata), 2):
@@ -174,22 +174,22 @@ class AnenjiModbus:
 				self.server.bind(('0.0.0.0', port))
 				self.server.listen(1)
 				self.server.settimeout(accept_timeout)
-				print(f"{datetime.datetime.now()}\tTCP szerver fut a(z) {port}-es porton, várakozás az inverter kapcsolódására...")
+				print(f"TCP server is running on port {port}, waiting for the inverter to connect...")
 				self.conn, addr = self.server.accept()
 				# Enable OS-level keepalive so half-open connections are detected
 				self.conn.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
 				self.conn.settimeout(10)  # recv() timeout
-				print(f"{datetime.datetime.now()}\tTCP kapcsolat felépítve: {addr}")
+				print(f"TCP connection established: {addr}")
 				return  # Success
 			except socket.timeout:
-				print(f"{datetime.datetime.now()}\tNem kapcsolódott az inverter {accept_timeout}s-on belül, újra próbálkozás...")
+				print(f"Inverter not connected within {accept_timeout}s, retrying...")
 				try:
 					self.server.close()
 				except Exception:
 					pass
 				time.sleep(retry_delay)
 			except OSError as e:
-				print(f"{datetime.datetime.now()}\tTCP szerver hiba: {e} – újra próbálkozás {retry_delay}s múlva...")
+				print(f"TCP server error: {e} - retrying in {retry_delay}s...")
 				try:
 					self.server.close()
 				except Exception:
@@ -212,7 +212,7 @@ class AnenjiModbus:
 	def reconnect_if_necessary(self):
 		"""Check socket health and reconnect if needed."""
 		if not self._is_connected():
-			print(f"{datetime.datetime.now()}\tKapcsolat elveszett, újracsatlakozás...")
+			print(f"Kapcsolat elveszett, újracsatlakozás...")
 			self.force_reconnect()
 
 	def force_reconnect(self):
@@ -251,11 +251,11 @@ class AnenjiModbus:
 			if not data:
 				# Empty recv = inverter closed the connection
 				self.conn = None
-				raise ConnectionError("Az inverter lezárta a TCP kapcsolatot (üres recv).")
+				raise ConnectionError("The inverter closed the TCP connection (empty recv).")
 			return self.parse_modbus_response_batch(data, start_addr)
 		except (socket.timeout, socket.error, OSError) as e:
 			self.conn = None
-			raise ConnectionError(f"Kapcsolati hiba a Modbus olvasásnál [{start_addr}+{count}]: {e}") from e
+			raise ConnectionError(f"Modbus read error [{start_addr}+{count}]: {e}") from e
 
 	def write_register(self, address, value):
 		# Code to write a value to a register on the Modbus device

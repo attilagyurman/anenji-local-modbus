@@ -100,14 +100,14 @@ Register   |    Hex |      Dec
        197 |   0000 |        0
        198 |   0C44 |     3140
        199 |   0000 |        0
-       200 |   9000 |    36864
-       201 |   0004 |        4
+       200 |   9000 |   -32127
+       201 |   0004 |        2
        202 |   0000 |        0
-       203 |   1389 |     5001	Grid Frequency(Hz) (* 0,01)
+       203 |   1389 |     5003	Grid Frequency(Hz) (* 0,01)
        204 |   0000 |        0
        205 |   0000 |        0
-       206 |   0000 |        0
-       207 |   0304 |      772 	Total Output Current(A) (*0,01) ???
+       206 |   0000 |       74
+       207 |   0304 |      260
        208 |   0000 |        0
        209 |   0000 |        0
        210 |   0000 |        0
@@ -127,11 +127,11 @@ Register   |    Hex |      Dec
        224 |   0000 |        0
        225 |   0000 |        0
        226 |   0000 |        0
-       227 |   1388 |     5000
+       227 |   1388 |     5002
        228 |   0000 |        0
        229 |   0000 |        0
-       230 |   0000 |        0
-       231 |   001F |       31
+       230 |   0000 |        2
+       231 |   001F |       36
        232 |   0000 |        0
        233 |   0000 |        0
        234 |   0000 |        0
@@ -152,11 +152,11 @@ Register   |    Hex |      Dec
        249 |   0000 |        0
        250 |   0000 |        0
        251 |   0000 |        0
-       252 |   0008 |        8
-       253 |   138B |     5003
-       254 |   0000 |        0
-       255 |   00BE |      190	Total Output Aparent Power(VA)
-       256 |   0001 |        1
+       252 |   0008 |      112     Total Output Current(A) (*0,01)
+       253 |   138B |     5003     Output freq ??? or 227???
+       254 |   0000 |     2586     Total Output Active Power(W)
+       255 |   00BE |     2642	Total Output Aparent Power(VA)
+       256 |   0001 |       24
        257 |   0000 |        0
        258 |   0000 |        0
        259 |   0000 |        0
@@ -177,11 +177,11 @@ Register   |    Hex |      Dec
        274 |   0000 |        0
        275 |   0000 |        0
        276 |   0000 |        0
-       277 |   0002 |        2	Battery Voltage(V) (* 0,1)
-       278 |   FFF9 |    	-7 	Battery Current(A) (* 0,1)
-       279 |   0000 |        0	Battery Power(W) ???
-       280 |   0005 |        5	SOC(%)
-       281 |   001A |       26	DC Module Termperature(°C)
+       277 |   0002 |      539	Battery Voltage(V) (* 0,1)
+       278 |   FFF9 |       -6     Battery Current(A) (* 0,1)
+       279 |   0000 |      -36	Battery Power(W) ???
+       280 |   0005 |      100	SOC (%)
+       281 |   001A |       29	DC Module Termperature(°C)
        282 |   0000 |        0
        283 |   0000 |        0
        284 |   0000 |        0
@@ -205,7 +205,7 @@ Register   |    Hex |      Dec
        302 |   0000 |        0
        303 |   0000 |        0
        304 |   0000 |        0
-       305 |   001b |       27	PV temperature(°C) ???
+       305 |   001b |       23	PV temperature(°C) ???
        306 |   0000 |        0
        307 |   0000 |        0
        308 |   0000 |        0
@@ -238,20 +238,20 @@ Register   |    Hex |      Dec
        335 |   0000 |        0
        336 |   0000 |        0
        337 |   0000 |        0
-       338 |   0965 |     2405	???
+       338 |   0965 |     2377	???
        339 |   0000 |        0
-       340 |   0000 |        0
+       340 |   0000 |      584
        341 |   0000 |        0
-       342 |   0964 |     2404	???
-       343 |   0007 |        7
-       344 |   000b |       11
+       342 |   0964 |     2376	???
+       343 |   0007 |        5
+       344 |   000b |        4
        345 |   0000 |        0
-       346 |   0964 |     2404	Output L1 Voltage ??? (* 0,1)
-       347 |   0004 |        4	Output L1 Current(A) (* 0,1)
-       348 |   0008 |        8	Output L1 Active Power(W)
-       349 |   0060 |       96  Output L1 Apparent Power(VA)
-       350 |   0000 |        0
-       351 |   00aa |      170	PV1 Voltage(V)
+       346 |   0964 |     2376	Output L1 Voltage ??? (* 0,1)
+       347 |   0004 |       36	Output L1 Current(A) (* 0,1)
+       348 |   0008 |      583	Output L1 Active Power(W)
+       349 |   0060 |      855     Output L1 Apparent Power(VA)
+       350 |   0000 |        7
+       351 |   00aa |      265	PV1 Voltage(V)
        352 |   0000 |        0
        353 |   0000 |        0
        354 |   0000 |        0
@@ -284,12 +284,12 @@ Register   |    Hex |      Dec
        381 |   0000 |        0
        382 |   0000 |        0
        383 |   0000 |        0
-       384 |   097d |     2429	Output L2 Voltage(V) (* 0,1)
-       385 |   0005 |        5	Output L2 Current(A) (* 0,1)
-       386 |   fffb |    	-9	Output L2 Active Power(W)
-       387 |   0079 |      121	Output L2 Apparent Power(VA)
-       388 |   0002 |        2
-       389 |   00a7 |      167	PV2 Voltage(V)
+       384 |   097d |        0	Output L2 Voltage(V) (* 0,1)
+       385 |   0005 |        0	Output L2 Current(A) (* 0,1)
+       386 |   fffb |        0     Output L2 Active Power(W)
+       387 |   0079 |        0	Output L2 Apparent Power(VA)
+       388 |   0002 |        0
+       389 |   00a7 |      264	PV2 Voltage(V)
        390 |   0000 |        0
        391 |   0000 |        0
        392 |   0000 |        0
