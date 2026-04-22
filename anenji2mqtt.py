@@ -95,6 +95,7 @@ if __name__ == "__main__":
 			max_gap = config['inverter'].get('max_gap', 20)
 			max_batch = config['inverter'].get('max_batch', 50)
 			reconnect_delay = config['inverter'].get('reconnect_delay', 10)
+			poll_interval = config['inverter'].get('poll_interval', 30)
 			debug = config.get('debug', False)
 			groups = group_registers(registers, max_gap=max_gap, max_batch=max_batch)
 			if debug:
@@ -141,7 +142,7 @@ if __name__ == "__main__":
 				if debug:
 					cycle_ms = (time.time() - cycle_start) * 1000
 					print(f"Cycle time: {cycle_ms:.0f} ms ({len(groups)} Modbus requests, {len(registers)} registers)")
-				time.sleep(30)
+				time.sleep(poll_interval)
 		except KeyboardInterrupt:
 			anenji.close();
 			print("Exiting...")		

@@ -6,6 +6,7 @@ mqtt:
   topic: power/anenji
 inverter:
   ip: <inverter_ip>
+  poll_interval: 30    # Seconds to wait between two query cycles
   max_gap: 20    # Max. gap between two consecutive register addresses to include them in the same batch. 0 = query each register individually (original behaviour)
   max_batch: 50  # Max. number of registers per single Modbus request
   reconnect_delay: 10  # Seconds to wait before attempting reconnection after a connection loss
